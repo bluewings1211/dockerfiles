@@ -1,6 +1,6 @@
 # Firefox over VNC
 
-This sample is copy from <https://docs.docker.com/engin/reference/builder/>
+This sample is copy from <https://docs.docker.com/engine/reference/builder/>
 
 After you copy the file, you can use `docker build -t <aliasname>` to build
 this image.
