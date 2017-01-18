@@ -1,4 +1,4 @@
-# a example to build a tiny docker image
+# an example to build a tiny docker image
 
 ## Pin a specific OS version
 選定好特定的版本的 OS，如 Ubuntu 16.04
