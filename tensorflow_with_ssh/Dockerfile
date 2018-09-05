@@ -1,0 +1,20 @@
+FROM tensorflow/tensorflow:latest
+
+RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:password' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
+COPY start.sh /notebooks/start.sh
+RUN chmod a+rwx /notebooks/start.sh
+
+EXPOSE 22
+#CMD ["/bin/bash /notebooks/start.sh"]
+CMD ["bash", "-c", "ls -al /notebooks/start.sh && /bin/bash /notebooks/start.sh"]
+#CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter notebook --notebook-dir=/notebooks --ip 0.0.0.0 --no-browser --allow-root"]
